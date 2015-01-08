@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Home | TEST</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <link href="css/codiqa.ext.css" rel="stylesheet">
+  <link href="css/jquery.mobile-1.3.1.css" rel="stylesheet">
+  <link href="css/test.css" rel="stylesheet">
+   <script src="https://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+  <script src="js/jquery-1.9.1.js"></script>
+  <script src="js/jquery.mobile-1.3.1.js"></script>
+  <script src="js/codiqa.ext.js"></script>
+  <script src="js/test.js"></script>
+</head>
+<body>
+  <div data-role="page" data-control-title="Home" id="page1">
+      <div id="iComic" data-theme="a" data-role="header" class="iComic">
+          <a data-role="button" href="page2.html" data-icon="bars" data-iconpos="notext" class="ui-btn-right">
+          </a>
+          <h3>
+              iComic
+          </h3>
+      </div>
+      <div data-role="content">
+          <div style="" data-controltype="image">
+              <img style="width: 292px; height: 250px" src="http://www.fmwconcepts.com/imagemagick/cartoon/images/photo-1h_cartoon_n6_p60_e4_w2_t90_b100_s150.jpg"/>
+          </div>
+          <div data-role="fieldcontain" data-controltype="camerainput">
+              <input type="file" name="" id="camerainput1" accept="image/*" capture="camera" data-mini="true"/>
+          </div>
+          <div id="checkboxes1" data-role="fieldcontain" data-controltype="checkboxes">
+              <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                  <input id="checkbox1" name="" type="checkbox"/>
+                  <label for="checkbox1">
+                      Use my location
+                  </label>
+              </fieldset>
+          </div>
+          <div id="googlemapsjs1" class="google-map" style="width: 288px; height: 150px; margin-left: auto; margin-right: auto">
+          </div>
+		  <div class="event listening button" onclick="login();">Login with Facebook</div>
+		  <div class="event listening button" onclick="logout();">Logout with Facebook</div>
+		          <div id="fb-root"></div>
+<script type="text/javascript">
+    Parse.initialize("lgATytN8e5TzPe2E7ULffz5FyiUnlB0zYvJdUe8w", "Oml9ikLgYIPdDOBqAMtS9rAvqMPZwhDPuvx9zrJu");
+  </script>
+        <script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="facebookConnectPlugin"></script>
+        <script type="text/javascript">
+            var login = function () {
+                if (window.cordova.platformId == "browser") {
+                    var appId = prompt("374534496042104", "iComic");
+                    facebookConnectPlugin.browserInit(appId);
+                }
+                facebookConnectPlugin.login( ["email"], 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
+            
+            var showDialog = function () { 
+                facebookConnectPlugin.showDialog( { method: "feed" }, 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
+            
+            var apiTest = function () { 
+                facebookConnectPlugin.api( "me/?fields=id,email", ["user_birthday"],
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) }); 
+            }
+
+            var getAccessToken = function () { 
+                facebookConnectPlugin.getAccessToken( 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
+            
+            var getStatus = function () { 
+                facebookConnectPlugin.getLoginStatus( 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
+
+            var logout = function () { 
+                facebookConnectPlugin.logout( 
+                    function (response) { alert(JSON.stringify(response)) },
+                    function (response) { alert(JSON.stringify(response)) });
+            }
+        </script>
+          <script type="text/javascript">
+                  window.CodiqaControls && window.CodiqaControls.register('googlemaps', 'googlemapsjs1', {
+              ready: function(control) {
+  
+                  control.options = {
+                      zoom: 14,
+                      mapTypeId: google.maps.MapTypeId.ROADMAP
+                  };
+  
+                  control.el = document.getElementById(control._id);
+                  control.map = new google.maps.Map(control.el, control.options);
+  
+                  var geocoder = new google.maps.Geocoder();
+                  geocoder.geocode({
+                      'address': 'Madison, WI'
+                  }, function(results, status) {
+                      if (status == google.maps.GeocoderStatus.OK) {
+  
+                          var marker = new google.maps.Marker({
+                              map: control.map,
+                              position: results[0].geometry.location
+                          });
+                          control.center = results[0].geometry.location;
+                          control.map.setCenter(control.center);
+                      }
+                  });
+  
+              }
+          });
+          </script>
+      </div>
+  </div>
+</body>
+</html>
